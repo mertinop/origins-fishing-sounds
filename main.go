@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/faiface/beep"
+	"github.com/faiface/beep/effects"
 	"github.com/faiface/beep/speaker"
 	"github.com/faiface/beep/wav"
 	g "xabbo.b7c.io/goearth"
@@ -179,9 +180,17 @@ func playSound(filename string) {
 	}
 
 	done := make(chan bool)
-	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
+	ctrl := &beep.Ctrl{Streamer: beep.Seq(streamer, beep.Callback(func() {
 		done <- true
-	})))
+	}))}
+
+	volume := &effects.Volume{
+		Streamer: ctrl,
+		Base:     0.05,
+		Volume:   1,
+		Silent:   false,
+	}
+	speaker.Play(volume)
 
 	<-done
 }
