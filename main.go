@@ -186,7 +186,7 @@ func playSound(filename string) {
 
 	volume := &effects.Volume{
 		Streamer: ctrl,
-		Base:     0.05,
+		Base:     1,
 		Volume:   1,
 		Silent:   false,
 	}
